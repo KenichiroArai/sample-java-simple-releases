@@ -5,10 +5,7 @@ on:
     tags:
       - "v*"
 
-permissions:
-  contents: write
-  discussions: write
-  pull-requests: write
+permissions: write-all
 
 jobs:
   build:
