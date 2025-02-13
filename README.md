@@ -1,2 +1,3 @@
-# java-simple-releases-sample
-シンプルなJavaでGitHub Releasesを試すサンプルプロジェクトです。
+# sample-java-simple-releases
+
+シンプルな Java で GitHub Releases を試すサンプルプロジェクトです。

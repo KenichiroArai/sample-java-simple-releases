@@ -14,7 +14,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello, Simple Java Sample!");
+        System.out.println("Hello, Sample Simple Java Releases!");
         App app = new App();
         app.set("名前の設定");
         System.out.println(app.get("テスト"));

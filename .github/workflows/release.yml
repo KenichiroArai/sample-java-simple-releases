@@ -26,5 +26,5 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: target/simple-java-sample-*.jar
+          files: target/sample-java-simple-*.jar
           generate_release_notes: true

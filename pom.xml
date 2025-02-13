@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>simple-java-sample</artifactId>
+    <artifactId>sample-simple-java-releases</artifactId>
     <version>0.1.0</version>
 
     <properties>
