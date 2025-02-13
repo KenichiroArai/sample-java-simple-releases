@@ -6,7 +6,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>simple-java-sample</artifactId>
-    <version>0.1.0-SAMPLE</version>
+    <version>0.1.0</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -27,6 +27,11 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.16.2</version>
             </plugin>
         </plugins>
     </build>
