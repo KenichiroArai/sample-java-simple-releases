@@ -6,7 +6,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>simple-java-sample</artifactId>
-    <version>0.1.0-SAMPLE</version>
+    <version>0.1.0</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
