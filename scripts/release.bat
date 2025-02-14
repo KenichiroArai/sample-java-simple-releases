@@ -106,7 +106,7 @@ if errorlevel 1 goto error
 
 echo リリースプロセスが完了しました。
 echo GitHub Actionsでリリースが作成されるまでお待ちください。
-goto :eof
+exit /b 0
 
 :error
 echo エラーが発生しました。
