@@ -13,6 +13,13 @@
 ### 1. コードの準備
 
 ```bash
+# リモートの最新情報を取得
+git fetch
+
+# ブランチの切り替え（作業用のブランチに切り替える）
+
+git checkout features/release
+
 # 変更状態の確認
 git status
 
@@ -21,24 +28,30 @@ git add .
 git commit -m "リリース準備完了"
 
 # 変更のプッシュ
-git push origin main
+git push origin features/release
 ```
 
 ### 2. バージョンの設定
 
 ```bash
-# Mavenのバージョンを設定（例：1.0.0）
+# Mavenのバージョンを設定（例：1.0.0）（うまく行かない場合は直接pom.xmlを編集する）
 mvn versions:set -DnewVersion=1.0.0
 
 # バージョン変更をコミット
 git add pom.xml
 git commit -m "バージョンを1.0.0に更新"
-git push origin main
+git push origin feature/release
 ```
 
 ### 3. リリースの作成
 
 ```bash
+# ブランチの切り替え（リリースをするブランチ）
+git checkout main
+
+# プッシュ
+git push origin main
+
 # タグの作成（vから始める必要があります）
 git tag v1.0.0
 
