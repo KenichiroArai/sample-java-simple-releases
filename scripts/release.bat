@@ -65,9 +65,15 @@ if errorlevel 1 goto error
 REM プルリクエストの作成（ghコマンドがある場合）
 where gh >nul 2>nul
 if %errorlevel% equ 0 (
-    echo プルリクエストを作成中...
-    gh pr create --base %RELEASE_BRANCH% --head %WORK_BRANCH% --title "リリース%VERSION%" --body "リリース%VERSION%のプルリクエストです。"
-    if errorlevel 1 goto error
+    REM 変更があるか確認
+    git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
+    if errorlevel 1 (
+        echo プルリクエストを作成中...
+        gh pr create --base %RELEASE_BRANCH% --head %WORK_BRANCH% --title "リリース%VERSION%" --body "リリース%VERSION%のプルリクエストです。"
+        if errorlevel 1 goto error
+    ) else (
+        echo 変更がないため、プルリクエストをスキップします。
+    )
 ) else (
     echo GitHub CLIがインストールされていません。
     echo 手動でプルリクエストを作成してください。
