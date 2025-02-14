@@ -1,9 +1,11 @@
 @echo off
+REM UTF-8でコンソール出力を設定
 chcp 65001 > nul
 setlocal enabledelayedexpansion
 
-REM コンソールの出力エンコーディングをUTF-8に設定
+REM PowerShellのエンコーディング設定
 powershell -command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8"
+powershell -command "$OutputEncoding = [System.Text.Encoding]::UTF8"
 
 REM パラメータのチェック
 if "%~1"=="" (
