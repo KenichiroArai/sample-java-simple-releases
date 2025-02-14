@@ -2,6 +2,9 @@
 chcp 65001 > nul
 setlocal enabledelayedexpansion
 
+REM コンソールの出力エンコーディングをUTF-8に設定
+powershell -command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8"
+
 REM パラメータのチェック
 if "%~1"=="" (
     echo 使用方法：release.bat [作業ブランチ] [リリースブランチ] [バージョン]
