@@ -41,7 +41,7 @@ git add .
 git commit -m "リリース準備：未コミットの変更を追加" || ECHO 未コミットの変更なし
 
 REM Mavenのバージョンを設定
-call mvn versions:SET -DnewVersion=%VERSION:~1%
+call mvn versions:set -DnewVersion=%VERSION:~1%
 IF errorlevel 1 GOTO error
 
 REM バージョン変更をコミット
