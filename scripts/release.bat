@@ -1,6 +1,8 @@
 @ECHO OFF
+
 REM UTF-8でコンソール出力を設定
-CHCP 65001 > nul
+CHCP 65001 > NUL
+
 SETLOCAL enabledelayedexpansion
 
 REM PowerShellのエンコーディング設定
