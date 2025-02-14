@@ -28,7 +28,7 @@ git add .
 git commit -m "リリース準備完了"
 
 # 変更のプッシュ
-git push origin feature/release
+git push origin features/release
 ```
 
 ### 2. バージョンの設定
