@@ -1,6 +1,7 @@
 @ECHO OFF
 
 REM UTF-8でコンソール出力を設定
+
 CHCP 65001 > NUL
 
 SETLOCAL enabledelayedexpansion
