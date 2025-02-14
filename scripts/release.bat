@@ -50,6 +50,14 @@ REM リモートの変更を取り込む
 git pull origin %WORK_BRANCH% --rebase
 if errorlevel 1 goto error
 
+REM ブランチ間の差分をチェック
+git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
+if %errorlevel% equ 0 (
+    echo 作業ブランチとリリースブランチに差分がありません。
+    echo プルリクエストをスキップしてタグ作成に進みます。
+    goto create_tag
+)
+
 echo 変更をプッシュ中...
 git push origin %WORK_BRANCH%
 if errorlevel 1 goto error
@@ -71,6 +79,7 @@ echo プルリクエストがマージされるまで待機します...
 echo マージが完了したらEnterキーを押してください...
 pause
 
+:create_tag
 REM リリースブランチに切り替え
 git checkout %RELEASE_BRANCH%
 if errorlevel 1 goto error
