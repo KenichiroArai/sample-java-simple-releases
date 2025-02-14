@@ -40,7 +40,7 @@ mvn versions:set -DnewVersion=1.0.0
 # バージョン変更をコミット
 git add pom.xml
 git commit -m "バージョンを1.0.0に更新"
-git push origin feature/release
+git push origin features/release
 ```
 
 ### 3. プルリクエストによるリリース対象のブランチへマージ
@@ -62,8 +62,8 @@ gh pr create --base main --head features/release --title "リリース1.0.0" --b
 # ブランチの切り替え（リリースをするブランチ）
 git checkout main
 
-# プッシュ
-git push origin main
+# プル
+git pull origin main
 
 # タグの作成（vから始める必要があります）
 git tag v1.0.0
