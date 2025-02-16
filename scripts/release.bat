@@ -1,6 +1,11 @@
 @echo off
+rem -*- mode: bat; coding: shift-jis -*-
 chcp 932 > nul
 setlocal enabledelayedexpansion
+
+rem PowerShellのエンコーディング設定
+powershell -command "[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding('shift_jis')"
+powershell -command "$OutputEncoding = [System.Text.Encoding]::GetEncoding('shift_jis')"
 
 rem リリース自動化スクリプト
 rem ===========================================
