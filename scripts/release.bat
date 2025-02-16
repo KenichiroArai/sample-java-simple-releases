@@ -133,6 +133,11 @@ git pull origin %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
 REM タグの作成とプッシュ
+REM 既存のタグを削除（存在しない場合はエラーを無視）
+git tag -d %VERSION% 2>nul
+REM リモートの既存タグを削除（存在しない場合はエラーを無視）
+git push origin :refs/tags/%VERSION% 2>nul
+REM 新しいタグを作成してプッシュ
 git tag %VERSION%
 git push origin %VERSION%
 IF errorlevel 1 GOTO error
