@@ -4,8 +4,13 @@ chcp 932 > nul
 setlocal enabledelayedexpansion
 
 rem PowerShellのエンコーディング設定
-powershell -command "[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding('shift_jis')"
-powershell -command "$OutputEncoding = [System.Text.Encoding]::GetEncoding('shift_jis')"
+powershell -command "[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding('shift-jis')"
+powershell -command "$OutputEncoding = [System.Text.Encoding]::GetEncoding('shift-jis')"
+
+rem Gitの文字コード設定
+git config --local core.quotepath off
+git config --local i18n.logoutputencoding shift-jis
+git config --local i18n.commitencoding shift-jis
 
 rem リリース自動化スクリプト
 rem ===========================================
