@@ -31,7 +31,7 @@ REM 例：
 REM   release.bat features/release main 1.0.0
 REM
 REM 注意事項：
-REM - このファイルはUTF-8（BOMなし）で保存してください
+REM - このファイルはSJISで保存してください
 REM - 改行コードはCRLF（Windows形式）を使用してください
 REM - バージョン番号の先頭の「v」は省略可能です（自動的に付加されます）
 REM - プルリクエストのマージは手動で行う必要があります
