@@ -1,110 +1,143 @@
-@echo off
-rem -*- mode: bat; coding: shift-jis -*-
-chcp 932 > nul
-setlocal enabledelayedexpansion
+@ECHO off
+REM -*- mode: bat; coding: shift-jis -*-
 
-rem PowerShellã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°è¨­å®š
+REM ===========================================
+REM ƒŠƒŠ[ƒXŽ©“®‰»ƒXƒNƒŠƒvƒg
+REM ===========================================
+REM
+REM ‘O’ñðŒF
+REM - GitHub ƒAƒJƒEƒ“ƒg‚ðŽ‚Á‚Ä‚¢‚é‚±‚Æ
+REM - ƒŠƒ|ƒWƒgƒŠ‚Ö‚ÌƒvƒbƒVƒ…Œ ŒÀ‚ª‚ ‚é‚±‚Æ
+REM - ˆÈ‰º‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚é‚±‚ÆF
+REM   - Java 21
+REM   - Maven
+REM   - Git
+REM   - GitHub CLIiƒIƒvƒVƒ‡ƒ“Fƒvƒ‹ƒŠƒNƒGƒXƒg‚ÌŽ©“®ì¬‚É•K—vj
+REM
+REM Žg—p•û–@F
+REM   release.bat [ì‹Æƒuƒ‰ƒ“ƒ`] [ƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`] [ƒo[ƒWƒ‡ƒ“]
+REM   —áFrelease.bat features/release main 1.0.0
+REM
+REM ‹@”\F
+REM - Žw’è‚µ‚½ƒo[ƒWƒ‡ƒ“‚Å‚ÌƒŠƒŠ[ƒXì¬‚ðŽ©“®‰»
+REM - pom.xml ‚Ìƒo[ƒWƒ‡ƒ“XV
+REM - –¢ƒRƒ~ƒbƒg‚Ì•ÏX‚ÌŽ©“®ƒRƒ~ƒbƒg
+REM - ƒŠƒ‚[ƒgƒuƒ‰ƒ“ƒ`‚Æ‚ÌŽ©“®“¯Šú
+REM - ƒvƒ‹ƒŠƒNƒGƒXƒg‚Ìì¬iGitHub CLIŽg—pŽžj
+REM - ƒ^ƒO‚Ìì¬‚ÆƒvƒbƒVƒ…
+REM
+REM ’ˆÓŽ–€F
+REM - ƒo[ƒWƒ‡ƒ“”Ô†‚Ìæ“ª‚Ìuvv‚ÍÈ—ª‰Â”\iŽ©“®“I‚É•t‰Áj
+REM - ƒvƒ‹ƒŠƒNƒGƒXƒg‚Ìƒ}[ƒW‚ÍŽè“®‚Ås‚¤•K—v‚ ‚è
+REM - GitHub CLI–¢ƒCƒ“ƒXƒg[ƒ‹Žž‚Íƒvƒ‹ƒŠƒNƒGƒXƒg‚ðŽè“®‚Åì¬
+REM - ‚±‚Ìƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ÍSJIS‚ÅƒRƒ“ƒ\[ƒ‹o—Í‚ðÝ’è
+REM
+REM ƒtƒ@ƒCƒ‹Œ`Ž®‚ÉŠÖ‚·‚é’ˆÓŽ–€F
+REM - ‚±‚Ìƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ÍShift-JISiSJISj‚Å•Û‘¶‚·‚é•K—v‚ª‚ ‚è‚Ü‚·
+REM - ‰üsƒR[ƒh‚ÍCRLFiWindowsŒ`Ž®j‚ðŽg—p‚µ‚Ä‚­‚¾‚³‚¢
+REM - ƒtƒ@ƒCƒ‹æ“ª‚Ì mode: bat; coding: shift-jis Žw’è‚ðíœ‚µ‚È‚¢‚Å‚­‚¾‚³‚¢
+REM ===========================================
+
+CHCP 932 > nul
+SETLOCAL enabledelayedexpansion
+
+REM PowerShell‚ÌƒGƒ“ƒR[ƒfƒBƒ“ƒOÝ’è
 powershell -command "[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding('shift-jis')"
 powershell -command "$OutputEncoding = [System.Text.Encoding]::GetEncoding('shift-jis')"
 
-rem Gitã®æ–‡å­—ã‚³ãƒ¼ãƒ‰è¨­å®š
-git config --local core.quotepath off
-git config --local i18n.logoutputencoding shift-jis
-git config --local i18n.commitencoding shift-jis
+REM ƒŠƒŠ[ƒXŽ©“®‰»ƒXƒNƒŠƒvƒg
+REM ===========================================
 
-rem ãƒªãƒªãƒ¼ã‚¹è‡ªå‹•åŒ–ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
-rem ===========================================
-
-if "%~1"=="" (
-    echo ä½¿ç”¨æ–¹æ³•ï¼šrelease.bat [ä½œæ¥­ãƒ–ãƒ©ãƒ³ãƒ] [ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒ] [ãƒãƒ¼ã‚¸ãƒ§ãƒ³]
-    echo ä¾‹ï¼šrelease.bat features/release main 1.0.0
-    exit /b 1
+IF "%~1"=="" (
+    ECHO Žg—p•û–@Frelease.bat [ì‹Æƒuƒ‰ƒ“ƒ`] [ƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`] [ƒo[ƒWƒ‡ƒ“]
+    ECHO —áFrelease.bat features/release main 1.0.0
+    EXIT /b 1
 )
 
-set WORK_BRANCH=%~1
-set RELEASE_BRANCH=%~2
-set VERSION=%~3
+SET WORK_BRANCH=%~1
+SET RELEASE_BRANCH=%~2
+SET VERSION=%~3
 
-if not "%VERSION:~0,1%"=="v" (
-    set VERSION=v%VERSION%
+IF NOT "%VERSION:~0,1%"=="v" (
+    SET VERSION=v%VERSION%
 )
 
-echo ãƒªãƒªãƒ¼ã‚¹ãƒ—ãƒ­ã‚»ã‚¹ã‚’é–‹å§‹ã—ã¾ã™...
-echo ä½œæ¥­ãƒ–ãƒ©ãƒ³ãƒ: %WORK_BRANCH%
-echo ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒ: %RELEASE_BRANCH%
-echo ãƒãƒ¼ã‚¸ãƒ§ãƒ³: %VERSION%
+ECHO ƒŠƒŠ[ƒXƒvƒƒZƒX‚ðŠJŽn‚µ‚Ü‚·...
+ECHO ì‹Æƒuƒ‰ƒ“ƒ`: %WORK_BRANCH%
+ECHO ƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`: %RELEASE_BRANCH%
+ECHO ƒo[ƒWƒ‡ƒ“: %VERSION%
 
 git fetch
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git checkout %WORK_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git add .
-git commit -m "ãƒªãƒªãƒ¼ã‚¹æº–å‚™ï¼šæœªã‚³ãƒŸãƒƒãƒˆã®å¤‰æ›´ã‚’è¿½åŠ " || echo æœªã‚³ãƒŸãƒƒãƒˆã®å¤‰æ›´ãªã—
+git commit -m "ƒŠƒŠ[ƒX€”õF–¢ƒRƒ~ƒbƒg‚Ì•ÏX‚ð’Ç‰Á" || ECHO –¢ƒRƒ~ƒbƒg‚Ì•ÏX‚È‚µ
 
-call mvn versions:set -DnewVersion=%VERSION:~1%
-if errorlevel 1 goto error
+CALL mvn versions:set -DnewVersion=%VERSION:~1%
+IF errorlevel 1 GOTO error
 
 git add pom.xml
-git commit -m "ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’ %VERSION:~1% ã«æ›´æ–°" || echo ãƒãƒ¼ã‚¸ãƒ§ãƒ³å¤‰æ›´ãªã—
+git commit -m "ƒo[ƒWƒ‡ƒ“‚ð %VERSION:~1% ‚ÉXV" || ECHO ƒo[ƒWƒ‡ƒ“•ÏX‚È‚µ
 
-del pom.xml.versionsBackup
+DEL pom.xml.versionsBackup
 
 git pull origin %WORK_BRANCH% --rebase
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
-if %errorlevel% equ 0 (
-    echo ä½œæ¥­ãƒ–ãƒ©ãƒ³ãƒã¨ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒã«å·®åˆ†ãŒã‚ã‚Šã¾ã›ã‚“ã€‚
-    echo ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¦ã‚¿ã‚°ä½œæˆã«é€²ã¿ã¾ã™ã€‚
-    goto create_tag
+IF %errorlevel% equ 0 (
+    ECHO ì‹Æƒuƒ‰ƒ“ƒ`‚ÆƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`‚É·•ª‚ª‚ ‚è‚Ü‚¹‚ñB
+    ECHO ƒvƒ‹ƒŠƒNƒGƒXƒg‚ðƒXƒLƒbƒv‚µ‚Äƒ^ƒOì¬‚Éi‚Ý‚Ü‚·B
+    GOTO create_tag
 )
 
-echo å¤‰æ›´ã‚’ãƒ—ãƒƒã‚·ãƒ¥ä¸­...
+ECHO •ÏX‚ðƒvƒbƒVƒ…’†...
 git push origin %WORK_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
-where gh >nul 2>nul
-if %errorlevel% equ 0 (
+WHERE gh >nul 2>nul
+IF %errorlevel% equ 0 (
     git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
-    if errorlevel 1 (
-        echo ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ä½œæˆä¸­...
-        gh pr create --base %RELEASE_BRANCH% --head %WORK_BRANCH% --title "ãƒªãƒªãƒ¼ã‚¹%VERSION%" --body "ãƒªãƒªãƒ¼ã‚¹%VERSION%ã®ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã§ã™ã€‚"
-        if errorlevel 1 goto error
-    ) else (
-        echo å¤‰æ›´ãŒãªã„ãŸã‚ã€ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¾ã™ã€‚
+    IF errorlevel 1 (
+        ECHO ƒvƒ‹ƒŠƒNƒGƒXƒg‚ðì¬’†...
+        gh pr create --base %RELEASE_BRANCH% --head %WORK_BRANCH% --title "ƒŠƒŠ[ƒX%VERSION%" --body "ƒŠƒŠ[ƒX%VERSION%‚Ìƒvƒ‹ƒŠƒNƒGƒXƒg‚Å‚·B"
+        IF errorlevel 1 GOTO error
+    ) ELSE (
+        ECHO •ÏX‚ª‚È‚¢‚½‚ßAƒvƒ‹ƒŠƒNƒGƒXƒg‚ðƒXƒLƒbƒv‚µ‚Ü‚·B
     )
-) else (
-    echo GitHub CLI ãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚
-    echo æ‰‹å‹•ã§ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ä½œæˆã—ã¦ãã ã•ã„ã€‚
-    pause
+) ELSE (
+    ECHO GitHub CLI ‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB
+    ECHO Žè“®‚Åƒvƒ‹ƒŠƒNƒGƒXƒg‚ðì¬‚µ‚Ä‚­‚¾‚³‚¢B
+    PAUSE
 )
 
-echo ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒãƒžãƒ¼ã‚¸ã•ã‚Œã‚‹ã¾ã§å¾…æ©Ÿã—ã¾ã™...
-echo ãƒžãƒ¼ã‚¸ãŒå®Œäº†ã—ãŸã‚‰ Enter ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„...
-pause
+ECHO ƒvƒ‹ƒŠƒNƒGƒXƒg‚ªƒ}[ƒW‚³‚ê‚é‚Ü‚Å‘Ò‹@‚µ‚Ü‚·...
+ECHO ƒ}[ƒW‚ªŠ®—¹‚µ‚½‚ç Enter ƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢...
+PAUSE
 
 :create_tag
 git checkout %RELEASE_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git pull origin %RELEASE_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git tag -d %VERSION% 2>nul
 git push origin :refs/tags/%VERSION% 2>nul
 git tag %VERSION%
 git push origin %VERSION%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git pull origin %RELEASE_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
-echo ãƒªãƒªãƒ¼ã‚¹ãƒ—ãƒ­ã‚»ã‚¹ãŒå®Œäº†ã—ã¾ã—ãŸã€‚
-echo GitHub Actions ã§ãƒªãƒªãƒ¼ã‚¹ãŒä½œæˆã•ã‚Œã‚‹ã¾ã§ãŠå¾…ã¡ãã ã•ã„ã€‚
-exit /b 0
+ECHO ƒŠƒŠ[ƒXƒvƒƒZƒX‚ªŠ®—¹‚µ‚Ü‚µ‚½B
+ECHO GitHub Actions ‚ÅƒŠƒŠ[ƒX‚ªì¬‚³‚ê‚é‚Ü‚Å‚¨‘Ò‚¿‚­‚¾‚³‚¢B
+EXIT /b 0
 
 :error
-echo ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚
-exit /b 1
+ECHO ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B
+EXIT /b 1
