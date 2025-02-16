@@ -2,7 +2,7 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "[bat]": {
         "files.encoding": "shiftjis",
-        "files.autoGuessEncoding": false
-    },
-    "files.autoGuessEncoding": false
+        "files.autoGuessEncoding": false,
+        "files.eol": "\r\n"
+    }
 }
