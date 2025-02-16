@@ -1,16 +1,49 @@
 @ECHO off
 REM -*- mode: bat; coding: shift-jis -*-
+
+REM ===========================================
+REM リリース自動化スクリプト
+REM ===========================================
+REM
+REM 前提条件：
+REM - GitHub アカウントを持っていること
+REM - リポジトリへのプッシュ権限があること
+REM - 以下がインストールされていること：
+REM   - Java 21
+REM   - Maven
+REM   - Git
+REM   - GitHub CLI（オプション：プルリクエストの自動作成に必要）
+REM
+REM 使用方法：
+REM   release.bat [作業ブランチ] [リリースブランチ] [バージョン]
+REM   例：release.bat features/release main 1.0.0
+REM
+REM 機能：
+REM - 指定したバージョンでのリリース作成を自動化
+REM - pom.xml のバージョン更新
+REM - 未コミットの変更の自動コミット
+REM - リモートブランチとの自動同期
+REM - プルリクエストの作成（GitHub CLI使用時）
+REM - タグの作成とプッシュ
+REM
+REM 注意事項：
+REM - バージョン番号の先頭の「v」は省略可能（自動的に付加）
+REM - プルリクエストのマージは手動で行う必要あり
+REM - GitHub CLI未インストール時はプルリクエストを手動で作成
+REM - このバッチファイルはSJISでコンソール出力を設定
+REM
+REM ファイル形式に関する注意事項：
+REM - このバッチファイルはShift-JIS（SJIS）で保存する必要があります
+REM - 改行コードはCRLF（Windows形式）を使用してください
+REM - ファイル先頭の mode: bat; coding: shift-jis 指定を削除しないでください
+REM ===========================================
+
 CHCP 932 > nul
 SETLOCAL enabledelayedexpansion
 
 REM PowerShellのエンコーディング設定
 powershell -command "[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding('shift-jis')"
 powershell -command "$OutputEncoding = [System.Text.Encoding]::GetEncoding('shift-jis')"
-
-REM Gitの文字コード設定
-git config --local core.quotepath off
-git config --local i18n.logoutputencoding shift-jis
-git config --local i18n.commitencoding shift-jis
 
 REM リリース自動化スクリプト
 REM ===========================================
