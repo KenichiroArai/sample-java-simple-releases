@@ -1,110 +1,110 @@
-@echo off
-rem -*- mode: bat; coding: shift-jis -*-
-chcp 932 > nul
-setlocal enabledelayedexpansion
+@ECHO off
+REM -*- mode: bat; coding: shift-jis -*-
+CHCP 932 > nul
+SETLOCAL enabledelayedexpansion
 
-rem PowerShellのエンコーディング設定
+REM PowerShellのエンコーディング設定
 powershell -command "[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding('shift-jis')"
 powershell -command "$OutputEncoding = [System.Text.Encoding]::GetEncoding('shift-jis')"
 
-rem Gitの文字コード設定
+REM Gitの文字コード設定
 git config --local core.quotepath off
 git config --local i18n.logoutputencoding shift-jis
 git config --local i18n.commitencoding shift-jis
 
-rem リリース自動化スクリプト
-rem ===========================================
+REM リリース自動化スクリプト
+REM ===========================================
 
-if "%~1"=="" (
-    echo 使用方法：release.bat [作業ブランチ] [リリースブランチ] [バージョン]
-    echo 例：release.bat features/release main 1.0.0
-    exit /b 1
+IF "%~1"=="" (
+    ECHO 使用方法：release.bat [作業ブランチ] [リリースブランチ] [バージョン]
+    ECHO 例：release.bat features/release main 1.0.0
+    EXIT /b 1
 )
 
-set WORK_BRANCH=%~1
-set RELEASE_BRANCH=%~2
-set VERSION=%~3
+SET WORK_BRANCH=%~1
+SET RELEASE_BRANCH=%~2
+SET VERSION=%~3
 
-if not "%VERSION:~0,1%"=="v" (
-    set VERSION=v%VERSION%
+IF NOT "%VERSION:~0,1%"=="v" (
+    SET VERSION=v%VERSION%
 )
 
-echo リリースプロセスを開始します...
-echo 作業ブランチ: %WORK_BRANCH%
-echo リリースブランチ: %RELEASE_BRANCH%
-echo バージョン: %VERSION%
+ECHO リリースプロセスを開始します...
+ECHO 作業ブランチ: %WORK_BRANCH%
+ECHO リリースブランチ: %RELEASE_BRANCH%
+ECHO バージョン: %VERSION%
 
 git fetch
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git checkout %WORK_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git add .
-git commit -m "リリース準備：未コミットの変更を追加" || echo 未コミットの変更なし
+git commit -m "リリース準備：未コミットの変更を追加" || ECHO 未コミットの変更なし
 
-call mvn versions:set -DnewVersion=%VERSION:~1%
-if errorlevel 1 goto error
+CALL mvn versions:set -DnewVersion=%VERSION:~1%
+IF errorlevel 1 GOTO error
 
 git add pom.xml
-git commit -m "バージョンを %VERSION:~1% に更新" || echo バージョン変更なし
+git commit -m "バージョンを %VERSION:~1% に更新" || ECHO バージョン変更なし
 
-del pom.xml.versionsBackup
+DEL pom.xml.versionsBackup
 
 git pull origin %WORK_BRANCH% --rebase
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
-if %errorlevel% equ 0 (
-    echo 作業ブランチとリリースブランチに差分がありません。
-    echo プルリクエストをスキップしてタグ作成に進みます。
-    goto create_tag
+IF %errorlevel% equ 0 (
+    ECHO 作業ブランチとリリースブランチに差分がありません。
+    ECHO プルリクエストをスキップしてタグ作成に進みます。
+    GOTO create_tag
 )
 
-echo 変更をプッシュ中...
+ECHO 変更をプッシュ中...
 git push origin %WORK_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
-where gh >nul 2>nul
-if %errorlevel% equ 0 (
+WHERE gh >nul 2>nul
+IF %errorlevel% equ 0 (
     git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
-    if errorlevel 1 (
-        echo プルリクエストを作成中...
+    IF errorlevel 1 (
+        ECHO プルリクエストを作成中...
         gh pr create --base %RELEASE_BRANCH% --head %WORK_BRANCH% --title "リリース%VERSION%" --body "リリース%VERSION%のプルリクエストです。"
-        if errorlevel 1 goto error
-    ) else (
-        echo 変更がないため、プルリクエストをスキップします。
+        IF errorlevel 1 GOTO error
+    ) ELSE (
+        ECHO 変更がないため、プルリクエストをスキップします。
     )
-) else (
-    echo GitHub CLI がインストールされていません。
-    echo 手動でプルリクエストを作成してください。
-    pause
+) ELSE (
+    ECHO GitHub CLI がインストールされていません。
+    ECHO 手動でプルリクエストを作成してください。
+    PAUSE
 )
 
-echo プルリクエストがマージされるまで待機します...
-echo マージが完了したら Enter キーを押してください...
-pause
+ECHO プルリクエストがマージされるまで待機します...
+ECHO マージが完了したら Enter キーを押してください...
+PAUSE
 
 :create_tag
 git checkout %RELEASE_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git pull origin %RELEASE_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git tag -d %VERSION% 2>nul
 git push origin :refs/tags/%VERSION% 2>nul
 git tag %VERSION%
 git push origin %VERSION%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
 git pull origin %RELEASE_BRANCH%
-if errorlevel 1 goto error
+IF errorlevel 1 GOTO error
 
-echo リリースプロセスが完了しました。
-echo GitHub Actions でリリースが作成されるまでお待ちください。
-exit /b 0
+ECHO リリースプロセスが完了しました。
+ECHO GitHub Actions でリリースが作成されるまでお待ちください。
+EXIT /b 0
 
 :error
-echo エラーが発生しました。
-exit /b 1
+ECHO エラーが発生しました。
+EXIT /b 1
