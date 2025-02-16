@@ -1,49 +1,48 @@
 @ECHO OFF
 
-REM ===========================================
-REM ãƒªãƒªãƒ¼ã‚¹è‡ªå‹•åŒ–ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
-REM ===========================================
-REM
-REM ã“ã®ãƒãƒƒãƒãƒ•ã‚¡ã‚¤ãƒ«ã¯ã€GitHubã§ã®ãƒªãƒªãƒ¼ã‚¹ä½œæˆãƒ—ãƒ­ã‚»ã‚¹ã‚’è‡ªå‹•åŒ–ã—ã¾ã™ã€‚
-REM
-REM å‰ææ¡ä»¶ï¼š
-REM - GitHub ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã‚’æŒã£ã¦ã„ã‚‹ã“ã¨
-REM - ãƒªãƒã‚¸ãƒˆãƒªã¸ã®ãƒ—ãƒƒã‚·ãƒ¥æ¨©é™ãŒã‚ã‚‹ã“ã¨
-REM - ãƒ­ãƒ¼ã‚«ãƒ«ç’°å¢ƒã«ä»¥ä¸‹ãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã‚‹ã“ã¨ï¼š
-REM   - Java 21
-REM   - Maven
-REM   - Git
-REM   - GitHub CLIï¼ˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ï¼šãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®è‡ªå‹•ä½œæˆã«å¿…è¦ï¼‰
-REM
-REM ä½¿ç”¨æ–¹æ³•ï¼š
-REM   release.bat [ä½œæ¥­ãƒ–ãƒ©ãƒ³ãƒ] [ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒ] [ãƒãƒ¼ã‚¸ãƒ§ãƒ³]
-REM
-REM ä¾‹ï¼š
-REM   release.bat features/release main 1.0.0
-REM
-REM æ³¨æ„äº‹é …ï¼š
-REM - ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¯UTF-8ï¼ˆBOMãªã—ï¼‰ã§ä¿å­˜ã—ã¦ãã ã•ã„
-REM - æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã¯CRLFï¼ˆWindowså½¢å¼ï¼‰ã‚’ä½¿ç”¨ã—ã¦ãã ã•ã„
-REM - ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç•ªå·ã®å…ˆé ­ã®ã€Œvã€ã¯çœç•¥å¯èƒ½ã§ã™ï¼ˆè‡ªå‹•çš„ã«ä»˜åŠ ã•ã‚Œã¾ã™ï¼‰
-REM - ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®ãƒžãƒ¼ã‚¸ã¯æ‰‹å‹•ã§è¡Œã†å¿…è¦ãŒã‚ã‚Šã¾ã™
-REM - GitHub CLIãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ãªã„å ´åˆã¯ã€ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®ä½œæˆã¯æ‰‹å‹•ã§è¡Œã†å¿…è¦ãŒã‚ã‚Šã¾ã™
-REM
-REM ===========================================
-
-REM UTF-8ã§ã‚³ãƒ³ã‚½ãƒ¼ãƒ«å‡ºåŠ›ã‚’è¨­å®š
-
-CHCP 65001 > NUL
+REM SJIS‚ÅƒRƒ“ƒ\[ƒ‹o—Í‚ðÝ’è
+CHCP 932 > NUL
 
 SETLOCAL enabledelayedexpansion
 
-REM PowerShellã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°è¨­å®š
-POWERSHELL -command "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8"
-POWERSHELL -command "$OutputEncoding = [System.Text.Encoding]::UTF8"
+REM PowerShell‚ÌƒGƒ“ƒR[ƒfƒBƒ“ƒOÝ’è
+POWERSHELL -command "[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding('shift_jis')"
+POWERSHELL -command "$OutputEncoding = [System.Text.Encoding]::GetEncoding('shift_jis')"
 
-REM ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ãƒã‚§ãƒƒã‚¯
+REM ===========================================
+REM ƒŠƒŠ[ƒXŽ©“®‰»ƒXƒNƒŠƒvƒg
+REM ===========================================
+REM
+REM ‚±‚Ìƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ÍAGitHub‚Å‚ÌƒŠƒŠ[ƒXì¬ƒvƒƒZƒX‚ðŽ©“®‰»‚µ‚Ü‚·B
+REM
+REM ‘O’ñðŒF
+REM - GitHub ƒAƒJƒEƒ“ƒg‚ðŽ‚Á‚Ä‚¢‚é‚±‚Æ
+REM - ƒŠƒ|ƒWƒgƒŠ‚Ö‚ÌƒvƒbƒVƒ…Œ ŒÀ‚ª‚ ‚é‚±‚Æ
+REM - ƒ[ƒJƒ‹ŠÂ‹«‚ÉˆÈ‰º‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚é‚±‚ÆF
+REM   - Java 21
+REM   - Maven
+REM   - Git
+REM   - GitHub CLIiƒIƒvƒVƒ‡ƒ“Fƒvƒ‹ƒŠƒNƒGƒXƒg‚ÌŽ©“®ì¬‚É•K—vj
+REM
+REM Žg—p•û–@F
+REM   release.bat [ì‹Æƒuƒ‰ƒ“ƒ`] [ƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`] [ƒo[ƒWƒ‡ƒ“]
+REM
+REM —áF
+REM   release.bat features/release main 1.0.0
+REM
+REM ’ˆÓŽ–€F
+REM - ‚±‚Ìƒtƒ@ƒCƒ‹‚ÍUTF-8iBOM‚È‚µj‚Å•Û‘¶‚µ‚Ä‚­‚¾‚³‚¢
+REM - ‰üsƒR[ƒh‚ÍCRLFiWindowsŒ`Ž®j‚ðŽg—p‚µ‚Ä‚­‚¾‚³‚¢
+REM - ƒo[ƒWƒ‡ƒ“”Ô†‚Ìæ“ª‚Ìuvv‚ÍÈ—ª‰Â”\‚Å‚·iŽ©“®“I‚É•t‰Á‚³‚ê‚Ü‚·j
+REM - ƒvƒ‹ƒŠƒNƒGƒXƒg‚Ìƒ}[ƒW‚ÍŽè“®‚Ås‚¤•K—v‚ª‚ ‚è‚Ü‚·
+REM - GitHub CLI‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍAƒvƒ‹ƒŠƒNƒGƒXƒg‚Ìì¬‚ÍŽè“®‚Ås‚¤•K—v‚ª‚ ‚è‚Ü‚·
+REM
+REM ===========================================
+
+REM ƒpƒ‰ƒ[ƒ^‚Ìƒ`ƒFƒbƒN
 IF "%~1"=="" (
-    ECHO ä½¿ç”¨æ–¹æ³•ï¼šrelease.bat [ä½œæ¥­ãƒ–ãƒ©ãƒ³ãƒ] [ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒ] [ãƒãƒ¼ã‚¸ãƒ§ãƒ³]
-    ECHO ä¾‹ï¼šrelease.bat features/release main 1.0.0
+    ECHO Žg—p•û–@Frelease.bat [ì‹Æƒuƒ‰ƒ“ƒ`] [ƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`] [ƒo[ƒWƒ‡ƒ“]
+    ECHO —áFrelease.bat features/release main 1.0.0
     EXIT /b 1
 )
 
@@ -51,105 +50,105 @@ SET WORK_BRANCH=%~1
 SET RELEASE_BRANCH=%~2
 SET VERSION=%~3
 
-REM ãƒãƒ¼ã‚¸ãƒ§ãƒ³æ–‡å­—åˆ—ã®æ¤œè¨¼
+REM ƒo[ƒWƒ‡ƒ“•¶Žš—ñ‚ÌŒŸØ
 IF NOT "%VERSION:~0,1%"=="v" (
     SET VERSION=v%VERSION%
 )
 
-ECHO ãƒªãƒªãƒ¼ã‚¹ãƒ—ãƒ­ã‚»ã‚¹ã‚’é–‹å§‹ã—ã¾ã™...
-ECHO ä½œæ¥­ãƒ–ãƒ©ãƒ³ãƒ: %WORK_BRANCH%
-ECHO ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒ: %RELEASE_BRANCH%
-ECHO ãƒãƒ¼ã‚¸ãƒ§ãƒ³: %VERSION%
+ECHO ƒŠƒŠ[ƒXƒvƒƒZƒX‚ðŠJŽn‚µ‚Ü‚·...
+ECHO ì‹Æƒuƒ‰ƒ“ƒ`: %WORK_BRANCH%
+ECHO ƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`: %RELEASE_BRANCH%
+ECHO ƒo[ƒWƒ‡ƒ“: %VERSION%
 
-REM ãƒªãƒ¢ãƒ¼ãƒˆã®æœ€æ–°æƒ…å ±ã‚’å–å¾—
+REM ƒŠƒ‚[ƒg‚ÌÅVî•ñ‚ðŽæ“¾
 git fetch
 IF errorlevel 1 GOTO error
 
-REM ä½œæ¥­ãƒ–ãƒ©ãƒ³ãƒã«åˆ‡ã‚Šæ›¿ãˆ
+REM ì‹Æƒuƒ‰ƒ“ƒ`‚ÉØ‚è‘Ö‚¦
 git checkout %WORK_BRANCH%
 IF errorlevel 1 GOTO error
 
-REM æœªã‚³ãƒŸãƒƒãƒˆã®å¤‰æ›´ã‚’ã™ã¹ã¦ã‚³ãƒŸãƒƒãƒˆ
+REM –¢ƒRƒ~ƒbƒg‚Ì•ÏX‚ð‚·‚×‚ÄƒRƒ~ƒbƒg
 git add .
-git commit -m "ãƒªãƒªãƒ¼ã‚¹æº–å‚™ï¼šæœªã‚³ãƒŸãƒƒãƒˆã®å¤‰æ›´ã‚’è¿½åŠ " || ECHO æœªã‚³ãƒŸãƒƒãƒˆã®å¤‰æ›´ãªã—
+git commit -m "ƒŠƒŠ[ƒX€”õF–¢ƒRƒ~ƒbƒg‚Ì•ÏX‚ð’Ç‰Á" || ECHO –¢ƒRƒ~ƒbƒg‚Ì•ÏX‚È‚µ
 
-REM Mavenã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’è¨­å®š
+REM Maven‚Ìƒo[ƒWƒ‡ƒ“‚ðÝ’è
 call mvn versions:set -DnewVersion=%VERSION:~1%
 IF errorlevel 1 GOTO error
 
-REM ãƒãƒ¼ã‚¸ãƒ§ãƒ³å¤‰æ›´ã‚’ã‚³ãƒŸãƒƒãƒˆ
+REM ƒo[ƒWƒ‡ƒ“•ÏX‚ðƒRƒ~ƒbƒg
 git add pom.xml
-git commit -m "ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’ %VERSION:~1% ã«æ›´æ–°" || ECHO ãƒãƒ¼ã‚¸ãƒ§ãƒ³å¤‰æ›´ãªã—
+git commit -m "ƒo[ƒWƒ‡ƒ“‚ð %VERSION:~1% ‚ÉXV" || ECHO ƒo[ƒWƒ‡ƒ“•ÏX‚È‚µ
 
-REM ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰Šé™¤
+REM ƒoƒbƒNƒAƒbƒvƒtƒ@ƒCƒ‹‚ðíœ
 DEL pom.xml.versionsBackup
 
-REM ãƒªãƒ¢ãƒ¼ãƒˆã®å¤‰æ›´ã‚’å–ã‚Šè¾¼ã‚€
+REM ƒŠƒ‚[ƒg‚Ì•ÏX‚ðŽæ‚èž‚Þ
 git pull origin %WORK_BRANCH% --rebase
 IF errorlevel 1 GOTO error
 
-REM ãƒ–ãƒ©ãƒ³ãƒé–“ã®å·®åˆ†ã‚’ãƒã‚§ãƒƒã‚¯
+REM ƒuƒ‰ƒ“ƒ`ŠÔ‚Ì·•ª‚ðƒ`ƒFƒbƒN
 git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
 IF %errorlevel% equ 0 (
-    ECHO ä½œæ¥­ãƒ–ãƒ©ãƒ³ãƒã¨ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒã«å·®åˆ†ãŒã‚ã‚Šã¾ã›ã‚“ã€‚
-    ECHO ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¦ã‚¿ã‚°ä½œæˆã«é€²ã¿ã¾ã™ã€‚
+    ECHO ì‹Æƒuƒ‰ƒ“ƒ`‚ÆƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`‚É·•ª‚ª‚ ‚è‚Ü‚¹‚ñB
+    ECHO ƒvƒ‹ƒŠƒNƒGƒXƒg‚ðƒXƒLƒbƒv‚µ‚Äƒ^ƒOì¬‚Éi‚Ý‚Ü‚·B
     GOTO create_tag
 )
 
-ECHO å¤‰æ›´ã‚’ãƒ—ãƒƒã‚·ãƒ¥ä¸­...
+ECHO •ÏX‚ðƒvƒbƒVƒ…’†...
 git push origin %WORK_BRANCH%
 IF errorlevel 1 GOTO error
 
-REM ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®ä½œæˆï¼ˆghã‚³ãƒžãƒ³ãƒ‰ãŒã‚ã‚‹å ´åˆï¼‰
+REM ƒvƒ‹ƒŠƒNƒGƒXƒg‚Ìì¬ighƒRƒ}ƒ“ƒh‚ª‚ ‚éê‡j
 WHERE gh >nul 2>nul
 IF %errorlevel% EQU 0 (
-    REM å¤‰æ›´ãŒã‚ã‚‹ã‹ç¢ºèª
+    REM •ÏX‚ª‚ ‚é‚©Šm”F
     git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
     IF errorlevel 1 (
-        ECHO ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ä½œæˆä¸­...
-        gh pr create --base %RELEASE_BRANCH% --head %WORK_BRANCH% --title "ãƒªãƒªãƒ¼ã‚¹%VERSION%" --body "ãƒªãƒªãƒ¼ã‚¹%VERSION%ã®ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã§ã™ã€‚"
+        ECHO ƒvƒ‹ƒŠƒNƒGƒXƒg‚ðì¬’†...
+        gh pr create --base %RELEASE_BRANCH% --head %WORK_BRANCH% --title "ƒŠƒŠ[ƒX%VERSION%" --body "ƒŠƒŠ[ƒX%VERSION%‚Ìƒvƒ‹ƒŠƒNƒGƒXƒg‚Å‚·B"
         IF errorlevel 1 GOTO error
     ) ELSE (
-        ECHO å¤‰æ›´ãŒãªã„ãŸã‚ã€ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¾ã™ã€‚
+        ECHO •ÏX‚ª‚È‚¢‚½‚ßAƒvƒ‹ƒŠƒNƒGƒXƒg‚ðƒXƒLƒbƒv‚µ‚Ü‚·B
     )
 ) ELSE (
-    ECHO GitHub CLI ãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚
-    ECHO æ‰‹å‹•ã§ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ä½œæˆã—ã¦ãã ã•ã„ã€‚
+    ECHO GitHub CLI ‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB
+    ECHO Žè“®‚Åƒvƒ‹ƒŠƒNƒGƒXƒg‚ðì¬‚µ‚Ä‚­‚¾‚³‚¢B
     PAUSE
 )
 
-REM ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®ãƒžãƒ¼ã‚¸ã‚’å¾…æ©Ÿ
-ECHO ãƒ—ãƒ«ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒãƒžãƒ¼ã‚¸ã•ã‚Œã‚‹ã¾ã§å¾…æ©Ÿã—ã¾ã™...
-ECHO ãƒžãƒ¼ã‚¸ãŒå®Œäº†ã—ãŸã‚‰ Enter ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„...
+REM ƒvƒ‹ƒŠƒNƒGƒXƒg‚Ìƒ}[ƒW‚ð‘Ò‹@
+ECHO ƒvƒ‹ƒŠƒNƒGƒXƒg‚ªƒ}[ƒW‚³‚ê‚é‚Ü‚Å‘Ò‹@‚µ‚Ü‚·...
+ECHO ƒ}[ƒW‚ªŠ®—¹‚µ‚½‚ç Enter ƒL[‚ð‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢...
 PAUSE
 
 :create_tag
-REM ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒã«åˆ‡ã‚Šæ›¿ãˆ
+REM ƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`‚ÉØ‚è‘Ö‚¦
 git checkout %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
-REM æœ€æ–°ã®å¤‰æ›´ã‚’å–å¾—
+REM ÅV‚Ì•ÏX‚ðŽæ“¾
 git pull origin %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
-REM ã‚¿ã‚°ã®ä½œæˆã¨ãƒ—ãƒƒã‚·ãƒ¥
-REM æ—¢å­˜ã®ã‚¿ã‚°ã‚’å‰Šé™¤ï¼ˆå­˜åœ¨ã—ãªã„å ´åˆã¯ã‚¨ãƒ©ãƒ¼ã‚’ç„¡è¦–ï¼‰
+REM ƒ^ƒO‚Ìì¬‚ÆƒvƒbƒVƒ…
+REM Šù‘¶‚Ìƒ^ƒO‚ðíœi‘¶Ý‚µ‚È‚¢ê‡‚ÍƒGƒ‰[‚ð–³Ž‹j
 git tag -d %VERSION% 2>nul
-REM ãƒªãƒ¢ãƒ¼ãƒˆã®æ—¢å­˜ã‚¿ã‚°ã‚’å‰Šé™¤ï¼ˆå­˜åœ¨ã—ãªã„å ´åˆã¯ã‚¨ãƒ©ãƒ¼ã‚’ç„¡è¦–ï¼‰
+REM ƒŠƒ‚[ƒg‚ÌŠù‘¶ƒ^ƒO‚ðíœi‘¶Ý‚µ‚È‚¢ê‡‚ÍƒGƒ‰[‚ð–³Ž‹j
 git push origin :refs/tags/%VERSION% 2>nul
-REM æ–°ã—ã„ã‚¿ã‚°ã‚’ä½œæˆã—ã¦ãƒ—ãƒƒã‚·ãƒ¥
+REM V‚µ‚¢ƒ^ƒO‚ðì¬‚µ‚ÄƒvƒbƒVƒ…
 git tag %VERSION%
 git push origin %VERSION%
 IF errorlevel 1 GOTO error
 
-REM ãƒªãƒªãƒ¼ã‚¹ãƒ–ãƒ©ãƒ³ãƒã‚’æœ€æ–°åŒ–
+REM ƒŠƒŠ[ƒXƒuƒ‰ƒ“ƒ`‚ðÅV‰»
 git pull origin %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
-ECHO ãƒªãƒªãƒ¼ã‚¹ãƒ—ãƒ­ã‚»ã‚¹ãŒå®Œäº†ã—ã¾ã—ãŸã€‚
-ECHO GitHub Actions ã§ãƒªãƒªãƒ¼ã‚¹ãŒä½œæˆã•ã‚Œã‚‹ã¾ã§ãŠå¾…ã¡ãã ã•ã„ã€‚
+ECHO ƒŠƒŠ[ƒXƒvƒƒZƒX‚ªŠ®—¹‚µ‚Ü‚µ‚½B
+ECHO GitHub Actions ‚ÅƒŠƒŠ[ƒX‚ªì¬‚³‚ê‚é‚Ü‚Å‚¨‘Ò‚¿‚­‚¾‚³‚¢B
 EXIT /b 0
 
 :error
-ECHO ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚
+ECHO ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B
 EXIT /b 1
