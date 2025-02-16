@@ -1,6 +1,12 @@
 @echo off
+rem -*- mode: bat; coding: shift-jis -*-
 chcp 932 > nul
 setlocal enabledelayedexpansion
+
+rem Gitの文字コード設定
+git config --local core.quotepath off
+git config --local i18n.logoutputencoding shift-jis
+git config --local i18n.commitencoding shift-jis
 
 rem リリース自動化スクリプト
 rem ===========================================
