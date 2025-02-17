@@ -119,19 +119,30 @@ ECHO マージが完了したら Enter キーを押してください...
 PAUSE
 
 :create_tag
+REM リリースブランチに切り替え
 git checkout %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
-git pull origin %RELEASE_BRANCH%
-IF errorlevel 1 GOTO error
+REM --ff-onlyオプションを追加してfast-forwardのみを許可
+git pull origin %RELEASE_BRANCH% --ff-only
+IF errorlevel 1 (
+    ECHO リモートの変更を取得できませんでした。
+    ECHO ローカルブランチが最新状態ではありません。
+    EXIT /b 1
+)
+
+REM タグ作成前に再度ブランチの状態を確認
+git status | findstr "Your branch is up to date" > nul
+IF errorlevel 1 (
+    ECHO ブランチが最新状態ではありません。
+    ECHO git pull を実行して最新の変更を取得してください。
+    EXIT /b 1
+)
 
 git tag -d %VERSION% 2>nul
 git push origin :refs/tags/%VERSION% 2>nul
 git tag %VERSION%
 git push origin %VERSION%
-IF errorlevel 1 GOTO error
-
-git pull origin %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
 ECHO リリースプロセスが完了しました。
