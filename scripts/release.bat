@@ -67,26 +67,36 @@ ECHO 作業ブランチ: %WORK_BRANCH%
 ECHO リリースブランチ: %RELEASE_BRANCH%
 ECHO バージョン: %VERSION%
 
+REM リモートリポジトリから最新の情報を取得
 git fetch
 IF errorlevel 1 GOTO error
 
+REM 指定された作業ブランチに切り替え
 git checkout %WORK_BRANCH%
 IF errorlevel 1 GOTO error
 
+REM 未コミットの変更をステージングエリアに追加
 git add .
+REM 変更をコミット（変更がない場合はスキップ）
 git commit -m "リリース準備：未コミットの変更を追加" || ECHO 未コミットの変更なし
 
+REM Maven プロジェクトのバージョンを更新（vを除いたバージョン番号を使用）
 CALL mvn versions:set -DnewVersion=%VERSION:~1%
 IF errorlevel 1 GOTO error
 
+REM 更新された pom.xml をステージングエリアに追加
 git add pom.xml
+REM バージョン更新をコミット（変更がない場合はスキップ）
 git commit -m "バージョンを %VERSION:~1% に更新" || ECHO バージョン変更なし
 
+REM Maven が作成したバックアップファイルを削除
 DEL pom.xml.versionsBackup
 
+REM リモートの変更を取得し、ローカルの変更を上に重ねる（コンフリクトを防ぐため）
 git pull origin %WORK_BRANCH% --rebase
 IF errorlevel 1 GOTO error
 
+REM 作業ブランチとリリースブランチの差分を確認
 git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
 IF %errorlevel% equ 0 (
     ECHO 作業ブランチとリリースブランチに差分がありません。
@@ -94,15 +104,19 @@ IF %errorlevel% equ 0 (
     GOTO create_tag
 )
 
+REM ローカルの変更をリモートリポジトリにプッシュ
 ECHO 変更をプッシュ中...
 git push origin %WORK_BRANCH%
 IF errorlevel 1 GOTO error
 
+REM GitHub CLI（gh）がインストールされているか確認
 WHERE gh >nul 2>nul
 IF %errorlevel% equ 0 (
+    REM 再度差分を確認（念のため）
     git diff %WORK_BRANCH% %RELEASE_BRANCH% --quiet
     IF errorlevel 1 (
         ECHO プルリクエストを作成中...
+        REM GitHub CLI を使用してプルリクエストを作成
         gh pr create --base %RELEASE_BRANCH% --head %WORK_BRANCH% --title "リリース%VERSION%" --body "リリース%VERSION%のプルリクエストです。"
         IF errorlevel 1 GOTO error
     ) ELSE (
@@ -119,18 +133,25 @@ ECHO マージが完了したら Enter キーを押してください...
 PAUSE
 
 :create_tag
+REM リリースブランチに切り替え
 git checkout %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
+REM リリースブランチの最新の変更を取得
 git pull origin %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
+REM 既存のタグがある場合は削除（エラーは無視）
 git tag -d %VERSION% 2>nul
+REM リモートの既存タグも削除（エラーは無視）
 git push origin :refs/tags/%VERSION% 2>nul
+REM 新しいタグを作成
 git tag %VERSION%
+REM タグをリモートにプッシュ
 git push origin %VERSION%
 IF errorlevel 1 GOTO error
 
+REM 最終確認のため、もう一度プル
 git pull origin %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
 
