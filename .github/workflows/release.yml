@@ -32,13 +32,13 @@ jobs:
                   mvn -B package --file pom.xml
                   echo "Mavenビルドが完了しました"
                   echo "ビルドされたアーティファクト："
-                  ls -l target/sample-java-simple-*.jar
+                  ls -l target/sample-simple-java-releases-*.jar
 
             # GitHubリリースの作成とアーティファクトのアップロード
             - name: Create Release
               uses: softprops/action-gh-release@v1
               with:
-                  files: target/sample-java-simple-*.jar
+                  files: target/sample-simple-java-releases-*.jar
                   generate_release_notes: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -48,4 +48,4 @@ jobs:
               run: |
                   echo "リリースが正常に作成されました"
                   echo "リリースされたファイル："
-                  ls -l target/sample-java-simple-*.jar
+                  ls -l target/sample-simple-java-releases-*.jar
