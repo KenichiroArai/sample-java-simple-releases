@@ -133,6 +133,22 @@ ECHO マージが完了したら Enter キーを押してください...
 PAUSE
 
 :create_tag
+REM リリースブランチに切り替える前に、マージ完了を確認
+git fetch
+IF errorlevel 1 GOTO error
+
+REM マージ状態を確認
+git rev-list --count origin/%RELEASE_BRANCH%..%WORK_BRANCH% > nul 2>&1
+IF errorlevel 1 (
+    ECHO マージが完了していることを確認中...
+    git pull origin %RELEASE_BRANCH% --ff-only
+    IF errorlevel 1 (
+        ECHO マージが完了していないか、コンフリクトが発生しています。
+        ECHO プルリクエストのマージを確認してください。
+        EXIT /b 1
+    )
+)
+
 REM リリースブランチに切り替え
 git checkout %RELEASE_BRANCH%
 IF errorlevel 1 GOTO error
